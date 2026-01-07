@@ -36,7 +36,7 @@ st.markdown("""
     [data-testid="stMetricValue"] { color: #00ffbd !important; font-family: monospace; }
     .stButton>button { 
         background-color: #1e2329; color: white; border-radius: 8px; 
-        border: 0,05px solid #333; transition: 0.3s;
+        border: 1px solid #333; transition: 0.3s;
     }
     .stButton>button:hover { border-color: #00ffbd; }
     
@@ -65,7 +65,7 @@ with st.sidebar:
     menu = st.radio("Navigation", ["Dashboard", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
-if menu == "Coin Locker":
+if menu == "Dash Board":
     # Header Logo
     if main_logo:
         st.image(main_logo, width=300)
@@ -117,6 +117,7 @@ elif menu == " ":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
 
 
 
