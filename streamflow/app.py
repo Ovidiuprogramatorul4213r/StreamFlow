@@ -57,15 +57,15 @@ except:
 # --- SIDEBAR ---
 with st.sidebar:
     if sidebar_icon:
-        st.image(sidebar_icon, width=8)
+        st.image(sidebar_icon, width=80)
     else:
         st.title("STREAMFLOW")
     
     st.markdown("---")
-    menu = st.radio("Navigation", ["Dashboard", " "])
+    menu = st.radio("Navigation", ["Coin Locker", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
-if menu == "Dashboard":
+if menu == "Coin Locker":
     # Header Logo
     if main_logo:
         st.image(main_logo, width=300)
@@ -117,6 +117,7 @@ elif menu == " ":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
 
 
 
