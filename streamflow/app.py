@@ -96,7 +96,7 @@ if menu == "Dashboard":
 # --- 5. DEVELOPER PANEL (Developer View) ---
 # --- 5. DEVELOPER PANEL (Developer View) ---
 
-elif menu == "Developer Panel":
+elif menu == " ":
 
     st.title(" ")
 
@@ -117,3 +117,4 @@ elif menu == "Developer Panel":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
