@@ -65,7 +65,7 @@ with st.sidebar:
     menu = st.radio("Navigation", ["Dashboard", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
-if menu == "Dash Board":
+if menu == "Dashboard":
     # Header Logo
     if main_logo:
         st.image(main_logo, width=300)
@@ -117,6 +117,7 @@ elif menu == " ":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
 
 
 
