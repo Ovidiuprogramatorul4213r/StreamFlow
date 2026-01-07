@@ -62,7 +62,7 @@ with st.sidebar:
         st.title("STREAMFLOW")
     
     st.markdown("---")
-    menu = st.radio("Navigation", ["Dashboard", "Developer Panel"])
+    menu = st.radio("Navigation", ["Dashboard", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
 if menu == "Dashboard":
@@ -98,7 +98,7 @@ if menu == "Dashboard":
 
 elif menu == " ":
 
-    st.title(" ")
+    st.title("Developer Panel ")
 
     password = st.text_input("Admin Password", type="password")
 
@@ -117,4 +117,5 @@ elif menu == " ":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
 
