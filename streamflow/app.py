@@ -65,7 +65,7 @@ with st.sidebar:
     menu = st.radio("Navigation", ["Dashboard", " "])
 
 # --- 4. DASHBOARD (User Interface) ---
-if menu == "Dashboard":
+if menu == "Coin Locker":
     # Header Logo
     if main_logo:
         st.image(main_logo, width=300)
@@ -75,7 +75,7 @@ if menu == "Dashboard":
     
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("Total Value Locked", "$1,240,000", "+5.2%")
+        st.metric("Total Value Locked", "$734,864", "+5.2%")
     with col2:
         st.metric("Active Streams", "42", "+2 New")
 
@@ -100,7 +100,7 @@ elif menu == " ":
 
     st.title("Developer Panel ")
 
-    password = st.text_input("Admin Password", type="password")
+    password = st.text_input(" ", type="password")
 
     
 
@@ -117,5 +117,6 @@ elif menu == " ":
         st.write("### Data Collected from Users")
 
         st.dataframe(df, use_container_width=True)
+
 
 
